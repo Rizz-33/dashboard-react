@@ -3,7 +3,7 @@ export { default as Sidebar } from './Sidebar';
 export { default as ThemeSettings } from './ThemeSettings';
 
 export { default as Cart } from './Cart';
-export { default as ChartsHeader } from './ChartsHeader';
+export { default as ChartHeader } from './ChartHeader';
 export { default as Chat } from './Chat';
 export { default as Footer } from './Footer';
 export { default as Header } from './Header';

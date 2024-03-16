@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './App.css';
 import { Footer, Navbar, Sidebar, ThemeSettings } from './components';
-import { Area, Bar, Calendar, ColorMapping, ColorPicker, Customers, Ecommerce, Editor, Employee, Financial, Kanban, Line, Orders, Pie, Pyramid, Stacked } from './pages';
+import { Area, Bar, Calendar, ColorMapping, ColorPicker, Customer, Ecommerce, Editor, Employee, Financial, Kanban, Line, Orders, Pie, Pyramid, Stacked } from './pages';
 
 import { useStateContext } from './contexts/ContextProvider';
 
@@ -71,7 +71,7 @@ const App = () => {
                     {/* pages  */}
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/employee" element={<Employee />} />
-                    <Route path="/customers" element={<Customers />} />
+                    <Route path="/customer" element={<Customer />} />
 
                     {/* apps  */}
                     <Route path="/kanban" element={<Kanban />} />
