@@ -1,17 +1,28 @@
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './App.css';
-import { Sidebar } from './components';
-import { Area, Bar, Calendar, ColorMapping, ColorPicker, Customer, Ecommerce, Editor, Employee, Financial, Kanban, Line, Orders, Pie, Pyramid, Stacked } from './pages';
+import { Footer, Navbar, Sidebar, ThemeSettings } from './components';
+import { Area, Bar, Calendar, ColorMapping, ColorPicker, Customers, Ecommerce, Editor, Employees, Financial, Kanban, Line, Orders, Pie, Pyramid, Stacked } from './pages';
 
+import { useStateContext } from './contexts/ContextProvider';
 
 const App = () => {
-    const activeMenu = false;
+    const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+
+    useEffect(() => {
+        const currentThemeColor = localStorage.getItem('colorMode');
+        const currentThemeMode = localStorage.getItem('themeMode');
+        if (currentThemeColor && currentThemeMode) {
+        setCurrentColor(currentThemeColor);
+        setCurrentMode(currentThemeMode);
+        }
+    }, []);
+
     return (
-        <div>
+        <div className={currentMode === 'Dark' ? 'dark' : ''}>
         <BrowserRouter>
             <div className="flex relative dark:bg-main-dark-bg">
             <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
@@ -21,6 +32,8 @@ const App = () => {
                 >
                 <button
                     type="button"
+                    onClick={() => setThemeSettings(true)}
+                    style={{ background: currentColor, borderRadius: '50%' }}
                     className="text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray"
                 >
                     <FiSettings />
@@ -45,23 +58,28 @@ const App = () => {
                 }
             >
                 <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-                Navbar
+                <Navbar />
                 </div>
                 <div>
+                {themeSettings && (<ThemeSettings />)}
 
                 <Routes>
+                    {/* dashboard  */}
                     <Route path="/" element={(<Ecommerce />)} />
                     <Route path="/ecommerce" element={(<Ecommerce />)} />
 
+                    {/* pages  */}
                     <Route path="/orders" element={<Orders />} />
-                    <Route path="/employee" element={<Employee />} />
-                    <Route path="/customer" element={<Customer />} />
+                    <Route path="/employees" element={<Employees />} />
+                    <Route path="/customers" element={<Customers />} />
 
+                    {/* apps  */}
                     <Route path="/kanban" element={<Kanban />} />
                     <Route path="/editor" element={<Editor />} />
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/color-picker" element={<ColorPicker />} />
 
+                    {/* charts  */}
                     <Route path="/line" element={<Line />} />
                     <Route path="/area" element={<Area />} />
                     <Route path="/bar" element={<Bar />} />
@@ -73,6 +91,7 @@ const App = () => {
 
                 </Routes>
                 </div>
+                <Footer />
             </div>
             </div>
         </BrowserRouter>
